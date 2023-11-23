@@ -47,6 +47,7 @@ class MovieDataService {
 
   createReview(data) {
     return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`, data)
+    
     .then(response => {
       console.log("Create Review response:", response.data);
       return response;
@@ -59,12 +60,29 @@ class MovieDataService {
 
   updateReview(data) {
     return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`, data)
+    .then(response => {
+      console.log("UPDATE Review response:", response.data);
+      return response;
+    })
+    .catch(error => {
+      console.error("Error fetching UPDATE Review:", error);
+      throw error;
+    });
   }
+  
   deleteReview(id, userId) {
     return axios.delete(
       `${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`,
-      { data: { review_id: id, user_id: userId } }
-    )
+      { data: { _id: id, user_id: userId } }
+     
+    ) .then(response => {
+        console.log("DELETE Review response:", response.data);
+        return response;
+      })
+      .catch(error => {
+        console.error("Error fetching DELETE Review:", error);
+        throw error;
+      });
   }
 
   getRatings() {

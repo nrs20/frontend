@@ -30,6 +30,24 @@ const Movie = props => {
         console.log(e)
       })
   }
+
+  const deleteReview = (reviewId, index) => {
+    console.log("THIS IS THE REVIEW ID INSIDE DELETE REVIEW", reviewId)
+    console.log("THIS IS THE USER:", props.user.id)
+    MovieDataService.deleteReview(reviewId, props.user.id)
+      .then(response => {
+        setMovie((prevState) => {
+          prevState.ratings.splice(index, 1)
+          return ({
+            ...prevState
+          })
+        })
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+  
   useEffect( () => {
     getMovie(props.match.params.id)
       },[props.match.params.id])
@@ -71,13 +89,14 @@ return (
 <Row>
 
 <Col><Link to={{
-pathname:"/movies/"+
+pathname:"/games/"+
 props.match.params.id+
-"/review",
-state: {currentReview: review}
+"/rating",
+state: {currentRating: review}
 }}>Edit</Link>
 </Col>
-<Col><Button variant="link">Delete</Button></Col>
+<Col><Button variant="link" onClick={() => deleteReview(review._id, index)}>
+Delete</Button></Col>
 </Row>
 }
 </Media.Body>

@@ -43,7 +43,7 @@ function App() {
 </Navbar>
 <Switch>
 
-  <Route exact path={["/", "/movies"]} component={MoviesList}>
+  <Route exact path={["/", "/games"]} component={MoviesList}>
   </Route>
   <Route path="/games/:id/rating" render={(props)=>
     <AddReview {...props} user={user} />
