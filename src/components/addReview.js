@@ -37,10 +37,11 @@ name: props.user.name
     if (editing) {
       console.log("THIS IS THE DATA WE ARE WORKING WITH", data)
       // get existing review id
+      console.log("THIS IS THE CURRENT RATING", props.location.state.currentRating)
       data.review_id = props.location.state.currentRating._id
       console.log("THIS IS THE DATA REVIEW ID", data.review_id)
       console.log("THIS IS THE REVIEW ID", data.review_id)
-       console.log("THIS IS THE UPDATED REVIEW DATA",data)
+       console.log("THIS IS THE DATA BEING PASSED INTO UPDATE REVIEW",data)
        MovieDataService.updateReview(data)
      
         .then(response => {

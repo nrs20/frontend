@@ -59,6 +59,7 @@ class MovieDataService {
   }
 
   updateReview(data) {
+    console.log("THIS IS THE DATA PASSED INTO THE UPDATEREVIEW FUNCTION", data)
     return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`, data)
     .then(response => {
       console.log("UPDATE Review response:", response.data);
