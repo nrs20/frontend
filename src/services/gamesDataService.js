@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-class MovieDataService {  
+class GameDataService {  
 
 
 
@@ -49,11 +49,11 @@ class MovieDataService {
     return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`, data)
     
     .then(response => {
-      console.log("Create Review response:", response.data);
+      console.log("Create Rating response:", response.data);
       return response;
     })
     .catch(error => {
-      console.error("Error fetching Create Review:", error);
+      console.error("Error fetching Create Rating:", error);
       throw error;
     });
   }
@@ -62,26 +62,26 @@ class MovieDataService {
     console.log("THIS IS THE DATA PASSED INTO THE updateRating FUNCTION", data)
     return axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`, data)
     .then(response => {
-      console.log("UPDATE Review response:", response.data);
+      console.log("UPDATE Rating response:", response.data);
       return response;
     })
     .catch(error => {
-      console.error("Error fetching UPDATE Review:", error);
+      console.error("Error fetching UPDATE Rating:", error);
       throw error;
     });
   }
   
-  deleteReview(id, userId) {
+  deleteRating(id, userId) {
     return axios.delete(
       `${process.env.REACT_APP_BACKEND_URL}/api/v1/nrs5/games/rating`,
       { data: { _id: id, user_id: userId } }
      
     ) .then(response => {
-        console.log("DELETE Review response:", response.data);
+        console.log("DELETE Rating response:", response.data);
         return response;
       })
       .catch(error => {
-        console.error("Error fetching DELETE Review:", error);
+        console.error("Error fetching DELETE Rating:", error);
         throw error;
       });
   }
@@ -100,4 +100,4 @@ class MovieDataService {
       });
   }
 }
-export default new MovieDataService()
+export default new GameDataService()

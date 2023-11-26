@@ -60,50 +60,56 @@ const Game = props => {
     <Container>
 <Row>
 <Col>
-<Image src={Game.thumb+"/100px250"} fluid />
+<Image src={Game.thumb + "/500px450"} style={{ width: '300px', height: '250px' }} />
 </Col>
 <Col>
 <Card>
 <Card.Header as="h5">{Game.external}</Card.Header>
 <Card.Body>
 <Card.Text>
-Cheapest Price: {Game.cheapest}
+Cheapest Price: ${Game.cheapest}
 </Card.Text>
 {props.user &&
 <Link to={"/nrs5_games/" + props.match.params.id + "/rating"}>
-Add RATING
+Add Rating
 </Link>}
 </Card.Body>
 </Card>
 <br></br>
-<h2>RATINGs</h2>
+<h2>Ratings</h2>
 <br></br>
 
-{Game.ratings.map((RATING, index)=>{
-return (
-<Media key={index}>
-<Media.Body>
-<h5>{RATING.name + " RATINGed on " + new Date(Date.parse(RATING.lastModified)).toDateString()}</h5>
-<p>{RATING.rating}</p>
-{props.user && props.user.id === RATING.user_id &&
-<Row>
-
-<Col><Link to={{
-pathname:"/nrs5_games/"+
-props.match.params.id+
-"/rating",
-state: {currentRating: RATING}
-}}>Edit</Link>
-</Col>
-<Col><Button variant="link" onClick={() => deleteRating(RATING._id, index)}>
-Delete</Button></Col>
-</Row>
-}
-</Media.Body>
-</Media>
-)
-})}
-
+{Game.ratings.length === 0 ? (
+  <p>No ratings available</p>
+) : (
+  Game.ratings.map((RATING, index) => (
+    <Media key={index}>
+      <Media.Body>
+        <h5>{RATING.name + " left a rating on " + new Date(Date.parse(RATING.lastModified)).toDateString()}</h5>
+        <p>{RATING.rating}</p>
+        {props.user && props.user.id === RATING.user_id && (
+          <Row>
+            <Col>
+              <Link
+                to={{
+                  pathname: "/nrs5_games/" + props.match.params.id + "/rating",
+                  state: { currentRating: RATING },
+                }}
+              >
+                Edit
+              </Link>
+            </Col>
+            <Col>
+              <Button variant="link" onClick={() => deleteRating(RATING._id, index)}>
+                Delete
+              </Button>
+            </Col>
+          </Row>
+        )}
+      </Media.Body>
+    </Media>
+  ))
+)}
 
 
 

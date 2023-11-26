@@ -10,6 +10,7 @@ import Card from 'react-bootstrap/Card';
 
 const GamesList = props => {
     const [gaming, setGames] = useState([])
+    
     const [searchTitle, setSearchTitle] = useState("")
     const [searchRating, setSearchRating] = useState("")
     const [ratings, setRatings] = useState(["All Prices"]) 
@@ -25,7 +26,11 @@ const GamesList = props => {
 
     }, [])
   
-  
+    const clearSearch = () => {
+      setSearchTitle("");
+      setSearchRating("All Prices");
+      retrieveGames();
+    };
     const retrieveGames = () => {
       GameDataService.getAll()
       
@@ -64,17 +69,16 @@ const GamesList = props => {
       const searchRating = e.target.value
       setSearchRating(searchRating);
     }
-
     const find = (query, by) => {
-        GameDataService.find(query, by)
+      GameDataService.find(query, by)
           .then(response => {
-            console.log("THIS IS IN FIND", response.data)
-            setGames(response.data.games)
+              console.log("API Response:", response.data);
+              setGames(response.data.games);
           })
-          .catch(e => {
-            console.log(e)
-          })
-      }
+          .catch(error => {
+              console.log("Error fetching data:", error);
+          });
+  };
       const findByTitle =
       () => {
         find(searchTitle, "external")
@@ -111,6 +115,9 @@ const GamesList = props => {
                   >
                     Search
                   </Button>
+                  <Button variant="primary" type="button" onClick={clearSearch}>
+    View All Games
+  </Button>
                 </Col>
                 <Col>
                   <Form.Group>
@@ -137,12 +144,12 @@ const GamesList = props => {
           {gaming.map((game) => {
             return (
               <Col>
-                <Card style={{ width: '18rem' }}>
-                  <Card.Img src={game.thumb + "/100px180"} />
+                <Card style={{ width: '30rem' }}>
+                  <Card.Img src={game.thumb + "/300px580"} />
                   <Card.Body>
                     <Card.Title>{game.external}</Card.Title>
                     <Card.Text>
-                      Cheapest Price: {game.cheapest}
+                      Cheapest Price: ${game.cheapest}
                     </Card.Text>
                     <Card.Text>
   Link to Deal: <a href={`https://www.cheapshark.com/redirect?dealID=${game.cheapestDealID}`} target="_blank" rel="noopener noreferrer">Deal</a>
