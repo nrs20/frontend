@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Switch, Route, Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import AddReview from "./components/addReview"
-import Movie from "./components/movie"
+import AddReview from "./components/addRating"
+import Movie from "./components/game"
 import Login from "./components/login"
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import MoviesList from './components/moviesList'
+import MoviesList from './components/gamesList'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -28,7 +28,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
           <Nav.Link>
-      <Link to={"/games"}>games</Link>
+      <Link to={"/nrs5_games"}>Games</Link>
     </Nav.Link>
     <Nav.Link>
       { user ? (
@@ -43,13 +43,13 @@ function App() {
 </Navbar>
 <Switch>
 
-  <Route exact path={["/", "/games"]} component={MoviesList}>
+  <Route exact path={["/", "/nrs5_games"]} component={MoviesList}>
   </Route>
-  <Route path="/games/:id/rating" render={(props)=>
+  <Route path="/nrs5_games/:id/rating" render={(props)=>
     <AddReview {...props} user={user} />
 }>
   </Route>
-  <Route path="/games/:id/" render={(props)=>
+  <Route path="/nrs5_games/:id/" render={(props)=>
     <Movie {...props} user={user} />
 }>
 

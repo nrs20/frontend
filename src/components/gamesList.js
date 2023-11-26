@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import MovieDataService from "../services/moviesDataService"
+import GameDataService from "../services/gamesDataService"
 import { Link } from "react-router-dom"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -8,39 +8,39 @@ import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 
-const MoviesList = props => {
-    const [gaming, setMovies] = useState([])
+const GamesList = props => {
+    const [gaming, setGames] = useState([])
     const [searchTitle, setSearchTitle] = useState("")
     const [searchRating, setSearchRating] = useState("")
     const [ratings, setRatings] = useState(["All Prices"]) 
     useEffect(() => {
-        console.log("Backend URL in moviesList.js:", process.env.REACT_APP_BACKEND_URL);
+        console.log("Backend URL in GamesList.js:", process.env.REACT_APP_BACKEND_URL);
 
-    console.log("Before retrieveMovies()");
-      retrieveMovies()
-      console.log("After retrieveMovies() and before retrieveRatings()");
+    console.log("Before retrieveGames()");
+      retrieveGames()
+      console.log("After retrieveGames() and before retrieveRatings()");
 
       retrieveRatings()
-      console.log("After retrieveMovies()", process.env.REACT_APP_BACKEND_URL);
+      console.log("After retrieveGames()", process.env.REACT_APP_BACKEND_URL);
 
     }, [])
   
   
-    const retrieveMovies = () => {
-      MovieDataService.getAll()
+    const retrieveGames = () => {
+      GameDataService.getAll()
       
         .then(response => {
-          console.log("This is the response in retrieveMovies()",response.data)
+          console.log("This is the response in retrieveGames()",response.data)
           //console.log(response.data)
-          setMovies(response.data.games)
+          setGames(response.data.games)
         })
         .catch(e => {
-          console.log("INSIDE RETRIEVE MOVIES",e)
+          console.log("INSIDE RETRIEVE gameS",e)
         })
     }
     console.log("This is gaming variable", gaming);
     const retrieveRatings = () => {
-      MovieDataService.getRatings()
+      GameDataService.getRatings()
         .then(response => {
             console.log("Ratings response status:", response.status)
           console.log("This is the response",response.data)
@@ -66,10 +66,10 @@ const MoviesList = props => {
     }
 
     const find = (query, by) => {
-        MovieDataService.find(query, by)
+        GameDataService.find(query, by)
           .then(response => {
             console.log("THIS IS IN FIND", response.data)
-            setMovies(response.data.games)
+            setGames(response.data.games)
           })
           .catch(e => {
             console.log(e)
@@ -83,13 +83,13 @@ const MoviesList = props => {
     const findByRating =
       () => {
         if (searchRating === "All Prices") {
-          retrieveMovies()
+          retrieveGames()
         } else {
           find(searchRating, "cheapest")
         }
       }
   
-  //MAY HAVE TO CHANGE LINE 126 (/movies)
+  //MAY HAVE TO CHANGE LINE 126 (/games)
     return (
         <div className="App">
           <Container>
@@ -134,22 +134,22 @@ const MoviesList = props => {
               </Row>
             </Form>
             <Row>
-          {gaming.map((movie) => {
+          {gaming.map((game) => {
             return (
               <Col>
                 <Card style={{ width: '18rem' }}>
-                  <Card.Img src={movie.thumb + "/100px180"} />
+                  <Card.Img src={game.thumb + "/100px180"} />
                   <Card.Body>
-                    <Card.Title>{movie.external}</Card.Title>
+                    <Card.Title>{game.external}</Card.Title>
                     <Card.Text>
-                      Cheapest Price: {movie.cheapest}
+                      Cheapest Price: {game.cheapest}
                     </Card.Text>
                     <Card.Text>
-  Link to Deal: <a href={`https://www.cheapshark.com/redirect?dealID=${movie.cheapestDealID}`} target="_blank" rel="noopener noreferrer">Deal</a>
+  Link to Deal: <a href={`https://www.cheapshark.com/redirect?dealID=${game.cheapestDealID}`} target="_blank" rel="noopener noreferrer">Deal</a>
 </Card.Text>
 
 
-                    <Link to={"/games/" + movie._id} >View Reviews</Link>
+                    <Link to={"/nrs5_games/" + game._id} >View Ratings</Link>
                   </Card.Body>
                 </Card>
               </Col>
@@ -161,4 +161,4 @@ const MoviesList = props => {
       );
 }
 
-export default MoviesList;
+export default GamesList;

@@ -1,30 +1,30 @@
 import React, { useState } from 'react'
-import MovieDataService from "../services/moviesDataService"
+import GameDataService from "../services/gamesDataService"
 import { Link } from "react-router-dom"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-const AddReview = props => {
+const AddRating = props => {
   let editing = false
-  let initialReviewState = ""
+  let initialRatingState = ""
   console.log("This is the editing variable", editing)
 
   if (props.location.state && props.location.state.currentRating) {
     editing = true
-    initialReviewState = props.location.state.currentRating.rating
+    initialRatingState = props.location.state.currentRating.rating
   }
 
-  const [rating, setReview] = useState(initialReviewState)
+  const [rating, setRating] = useState(initialRatingState)
   // keeps track if review is submitted
   const [submitted, setSubmitted] = useState(false)
 
-  const onChangeReview = e => {
+  const onChangeRating = e => {
     const review = e.target.value
-    console.log("THIS IS THE REVIEW VAR IN onChangeReview", review)
-    setReview(review);
+    console.log("THIS IS THE REVIEW VAR IN onChangeRating", review)
+    setRating(review);
   }
 
-const saveReview = () => {
+const saveRating = () => {
   var data = {
        game_id: props.match.params.id,
        rating: rating,
@@ -42,7 +42,7 @@ name: props.user.name
       console.log("THIS IS THE DATA REVIEW ID", data.review_id)
       console.log("THIS IS THE REVIEW ID", data.review_id)
        console.log("THIS IS THE DATA BEING PASSED INTO UPDATE REVIEW",data)
-       MovieDataService.updateReview(data)
+       GameDataService.updateRating(data)
      
         .then(response => {
           setSubmitted(true);
@@ -52,7 +52,7 @@ name: props.user.name
           console.log(e);
         })
     } else {
-      MovieDataService.createReview(data)
+      GameDataService.createRating(data)
         .then(response => {
           setSubmitted(true)
         }).catch(e => { })
@@ -66,7 +66,7 @@ name: props.user.name
   /*
   console.log("THIS IS THE DATA PASSED IN", data);
   console.log("THIS IS THE GAME ID PASSED IN", data.gameID)
-  MovieDataService.createReview(data)
+  GameDataService.createReview(data)
     .then(response => {
       console.log("THIS IS THE RESPONSE FROM CREATE REVIEW", response.data)
       setSubmitted(true)
@@ -78,7 +78,7 @@ name: props.user.name
       {submitted ? (
         <div>
           <h4>Review submitted successfully</h4>
-          <Link to={"/games/" + props.match.params.id}>
+          <Link to={"/nrs5_games/" + props.match.params.id}>
             Back to Movie
           </Link>
         </div>
@@ -90,10 +90,10 @@ name: props.user.name
                 type="text"
                 required
                 value={rating}
-                onChange={onChangeReview}
+                onChange={onChangeRating}
               />
             </Form.Group>
-            <Button variant="primary" onClick={saveReview}>
+            <Button variant="primary" onClick={saveRating}>
               Submit
             </Button>
           </Form>
@@ -102,4 +102,4 @@ name: props.user.name
     )
   }
 
-export default AddReview;
+export default AddRating;
