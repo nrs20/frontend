@@ -1,10 +1,19 @@
+/*Name: Natalia Smith
+Date: 11/30/2023
+Course: IT302
+Section: 001
+Assignment: Unit 11
+Email: nrs5@njit.edu
+*/
 import React, { useState } from 'react'
 import { Switch, Route, Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import AddReview from "./components/addRating"
+import AddRating from "./components/addRating"
 import Game from "./components/game"
 import Login from "./components/login"
+import Logout from "./components/logout"
+
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import GamesList from './components/gamesList'
@@ -32,9 +41,11 @@ function App() {
     </Nav.Link>
     <Nav.Link>
       { user ? (
-        <a>Logout User</a>
+      // <a>Logout User</a>
+      <Link to={"/nrs5_logout"}>Logout</Link>
+
       ) : (
-        <Link to={"/login"}>Login</Link>
+        <Link to={"/nrs5_login"}>Login</Link>
       )}
 
 </Nav.Link>
@@ -46,7 +57,7 @@ function App() {
   <Route exact path={["/", "/nrs5_games"]} component={GamesList}>
   </Route>
   <Route path="/nrs5_games/:id/rating" render={(props)=>
-    <AddReview {...props} user={user} />
+    <AddRating {...props} user={user} />
 }>
   </Route>
   <Route path="/nrs5_games/:id/" render={(props)=>
@@ -54,10 +65,15 @@ function App() {
 }>
 
   </Route>
-  <Route path="/login" render={(props)=>
+  <Route path="/nrs5_login" render={(props)=>
     <Login {...props} login={login} />
 }>
+  
   </Route>
+  <Route path="/nrs5_logout" render={(props)=>
+    <Logout {...props} logout={logout} />
+}>
+    </Route>
 
 </Switch>
 

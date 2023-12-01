@@ -1,3 +1,11 @@
+/*Name: Natalia Smith
+Date: 11/30/2023
+Course: IT302
+Section: 001
+Assignment: Unit 11
+Email: nrs5@njit.edu
+*/
+
 import React, { useState, useEffect } from 'react'
 import GameDataService from "../services/gamesDataService"
 import { Link } from "react-router-dom"
@@ -93,7 +101,6 @@ const GamesList = props => {
         }
       }
   
-  //MAY HAVE TO CHANGE LINE 126 (/games)
     return (
         <div className="App">
           <Container>
